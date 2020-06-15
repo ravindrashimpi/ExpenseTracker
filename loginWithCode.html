@@ -1,42 +1,46 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="x-ua-comptible" content="ie-edge">
-        <!-- Bootstrap CSS --> 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/exptracker.css">
-        <link rel="stylesheet" href="css/all.css">
-        <link rel="stylesheet" href="css/datetimepicker.min.css">
-        <link rel="stylesheet" href="css/bootstrap-select.min.css">
-        <title>Expense Tracker</title>
-    </head>
-    <body> 
-        <div class="jumbotron py-4 jumbotron-bg">
-            <h5>Expense Tracker</h5>
-        </div> 
 
-        <form class="form-signin">
-            <!-- Used to display Alerts -->
-            <div id="alerts"></div>
-            <h3 class="h5 mb-3">Login</h1>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-comptible" content="ie-edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/exptracker.css">
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/datetimepicker.min.css">
+    <link rel="stylesheet" href="css/bootstrap-select.min.css">
+    <title>Expense Tracker</title>
+</head>
+
+<body>
+    <div class="jumbotron py-4 jumbotron-bg">
+        <h5>Expense Tracker</h5>
+    </div>
+
+    <form class="form-signin">
+        <!-- Used to display Alerts -->
+        <div id="alerts"></div>
+        <h3 class="h5 mb-3">Login</h1>
             <input type="email" id="inputEmail" class="form-control mb-2" placeholder="Email address">
             <input type="password" id="inputPassword" class="form-control mb-2" placeholder="Password">
             <input type="text" id="inputRegCode" class="form-control mb-2" placeholder="Registration Code">
-            <button class="btn btn-sm bg-primary btn-block" type="button" onclick="validateRegistrationCode()">Verify Code</button>
-        </form>
+            <button class="btn btn-sm bg-primary btn-block" type="button" onclick="validateRegistrationCode()">Verify
+                Code</button>
+    </form>
 
-        <!-- Model is define which will inform user that the code has been 
+    <!-- Model is define which will inform user that the code has been 
             generated and send to their email for verification -->
-        <div class="modal fade" id="regVerificationModal" tabindex="-1" role="dialog" aria-labelledby="regVerificationModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
+    <div class="modal fade" id="regVerificationModal" tabindex="-1" role="dialog"
+        aria-labelledby="regVerificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="regVerificationModalLabel">Registration</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div id="regVerModalMsg" class="modal-body">
@@ -45,17 +49,18 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Ok</button>
                 </div>
-                </div>
             </div>
         </div>
+    </div>
 
-        <!-- Load the Bootstrap scripts JQUery First, then Popper and then Bootstrap -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.datetimepicker.full.min.js"></script>
-        <script src="js/bootstrap-select.min.js"></script>
-        <script src="js/amazon-cognito-identity.min.js"></script>
-        <script src="js/exptracker.js"></script>
-    </body>
+    <!-- Load the Bootstrap scripts JQUery First, then Popper and then Bootstrap -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.datetimepicker.full.min.js"></script>
+    <script src="js/bootstrap-select.min.js"></script>
+    <script src="js/amazon-cognito-identity.min.js"></script>
+    <script src="js/exptracker.js"></script>
+</body>
+
 </html>
