@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-comptible" content="ie-edge">
+        <!-- Bootstrap CSS --> 
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/exptracker.css">
+        <link rel="stylesheet" href="css/all.css">
+        <link rel="stylesheet" href="css/datetimepicker.min.css">
+        <link rel="stylesheet" href="css/bootstrap-select.min.css">
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/amazon-cognito-identity.min.js"></script>
+        <script src="js/IdValidation.js"></script>
+        <title>Expense Tracker</title>
+    </head>
+    <body onload="checkForUserIncome()">
+        <nav class="navbar navbar-light menu-background navbar-expand-sm ">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="Navbar">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active"><a class="nav-link text-white" href="dashboard.html">Home</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="transactionSubMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Transaction
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="transactionSubMenu">
+                              <a class="dropdown-item" href="transaction.html">New Transaction</a>
+                              <a class="dropdown-item" href="listTransaction.html">List Transaction</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a class="nav-link text-white" href="category.html">Category</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#" onclick="logout()">Logout</a></li>
+                    </ul>
+                    <span class="navbar-text text-white">
+                        <div id="loginUserName"></div>
+                    </span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container d-block d-sm-none d-md-none mt-1">
+            <div class="row">
+                <div class="col-6" id="tranCancel"><h6>Cancel</h6></div>
+                <div class="col-6 d-flex justify-content-end" id="tranDone"><h6>Done</h6></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-register">
+            <h5 class="text-center">New Transaction</h5>
+        </div>
+
+        <!-- Body Section Start -->
+        <form class="form-register" id="tranForm">
+             <!-- Used to display Alerts -->
+             <div id="alerts"></div>
+            <div class="input-group mb-2">
+                <input type="text" id="tranDate" class="form-control" placeholder="Enter Date" readonly>
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <!-- <i class="fa fa-arrow-circle-o-right d-block d-sm-none d-md-none" aria-hidden="true" id="tranDateMobileId"></i> -->
+                        <i class="fa fa-calendar" aria-hidden="true" id="tranDateWebId"></i>
+                    </span>
+                </div>
+            </div>
+            <input type="text" id="tranAmount" class="form-control mb-2" placeholder="Enter Amount" onkeypress="return isNumberKey(this, event)">
+            <!-- <button class="btn btn-sm bg-primary" type="button" onclick="loadSelect()">Load</button> -->
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="tranCategory">Category</label>
+                </div>
+                <div id="selCategorySection"></div>
+            </div>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Note</span>
+                </div>
+                <textarea class="form-control" aria-label="Enter Note" id="tranNote"></textarea>
+            </div>
+            <button id="addTransactionBTN" class="btn btn-sm bg-primary btn-block d-none d-sm-block d-md-block" type="button" onclick="addTransaction()">Add Transaction</button>
+        </form>
+
+        <!-- Display bottom menu only during SM screen -->
+        <nav class="navbar d-flex justify-content-end fixed-bottom navbar-expand navbar-light bg-light d-block d-sm-none d-md-none">
+            <a class="navbar-brand" href="dashboard.html"><i class="fa fa-home" aria-hidden="true"></i></a>
+            <a class="navbar-brand" href="transaction.html"><i class="fas fa-comment-dollar"></i></a>
+            <a class="navbar-brand" href="listTransaction.html"><i class="fas fa-list-ul"></i></i></a>
+            <a class="navbar-brand" href="category.html"><i class="fa fa-cog" aria-hidden="true"></i></a>
+        </nav>
+
+        <!-- Model is define which will inform user that the code has been 
+            generated and send to their email for verification -->
+        <div class="modal fade" id="incomeModel" tabindex="-1" role="dialog" aria-labelledby="incomeModelLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="incomeModelLabel">Income Empty</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modelMsg" class="modal-body">
+                    <p>You have not added Income to your profile for this month. Redirecting to Add Income page.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Load the Bootstrap scripts JQUery First, then Popper and then Bootstrap -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.datetimepicker.full.min.js"></script>
+        <script src="js/bootstrap-select.min.js"></script>
+        <script src="js/exptracker.js"></script>
+        
+    </body>
+</html>

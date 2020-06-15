@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-comptible" content="ie-edge">
+        <!-- Bootstrap CSS --> 
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/exptracker.css">
+        <link rel="stylesheet" href="css/all.css">
+        <link rel="stylesheet" href="css/datetimepicker.min.css">
+        <link rel="stylesheet" href="css/bootstrap-select.min.css">
+        <title>Expense Tracker</title>
+    </head>
+    <body>
+        <div class="jumbotron py-4 jumbotron-bg">
+            <h5>Expense Tracker</h5>
+        </div> 
+
+        <form class="form-signin" id="loginForm">
+            <!-- Used to display Alerts -->
+            <div id="alerts">
+            </div>
+            <h3 class="h5 mb-3">Login</h1>
+            <input type="email" id="inputEmail" class="form-control mb-2" placeholder="Email address"  >
+            <input type="password" id="inputPassword" class="form-control mb-2" placeholder="Password" >
+            <button class="btn btn-sm bg-primary btn-block"  id="signIn" type="button" onclick="validateLogin();">Sign in</button>
+            <a href="registerAccount.html" class="signup-msg">Register to create an account.</a>
+        </form>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 offset-sm-4 passwordPolicy"><b>Password Policy</b></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 offset-sm-4"><hr/></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 offset-sm-4 passwordPolicy">
+                    <ul>
+                        <li>Minimum length: 8</li>
+                        <li>Require numbers</li>
+                        <li>Require special character</li>
+                        <li>Require uppercase letters</li>
+                        <li>Require lowercase letters</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+ 
+       
+        
+       <!-- Load the Bootstrap scripts JQUery First, then Popper and then Bootstrap -->
+       <script src="js/jquery-3.3.1.min.js"></script>
+       <script src="js/popper.min.js"></script>
+       <script src="js/bootstrap.min.js"></script>
+       <script src="js/jquery.datetimepicker.full.min.js"></script>
+       <script src="js/bootstrap-select.min.js"></script>
+       <script src="js/amazon-cognito-identity.min.js"></script>
+       <script src="js/exptracker.js"></script>
+    </body>
+</html>

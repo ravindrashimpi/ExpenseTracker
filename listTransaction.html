@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-comptible" content="ie-edge">
+        <!-- Bootstrap CSS --> 
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/exptracker.css">
+        <link rel="stylesheet" href="css/all.css">
+        <link rel="stylesheet" href="css/datetimepicker.min.css">
+        <link rel="stylesheet" href="css/bootstrap-select.min.css">
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/amazon-cognito-identity.min.js"></script>
+        <script src="js/IdValidation.js"></script>
+        <title>Expense Tracker</title>
+    </head> 
+    <body onload="loadExpenseReport();getTransactionList();">
+        <nav class="navbar navbar-light menu-background navbar-expand-sm ">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="Navbar">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active"><a class="nav-link text-white" href="dashboard.html">Home</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="transactionSubMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Transaction
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="transactionSubMenu">
+                              <a class="dropdown-item" href="transaction.html">New Transaction</a>
+                              <a class="dropdown-item" href="listTransaction.html">List Transaction</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a class="nav-link text-white" href="category.html">Category</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#" onclick="logout()">Logout</a></li>
+                    </ul>
+                    <span class="navbar-text text-white">
+                        <div id="loginUserName"></div>
+                    </span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- <div class="container d-block d-sm-none d-md-none mt-1">
+            <div class="row">
+                <div class="col-6" id="tranCancel"><h6>Cancel</h6></div>
+                <div class="col-6 d-flex justify-content-end"><h6>Done</h6></div>
+                </div>
+            </div>
+        </div> -->
+        
+        <div class="form-register d-none d-sm-block d-md-block">
+            <h5 class="text-center">Transaction Details</h5>
+             <!-- Used to display Alerts -->
+            <div id="alerts"></div>
+        </div>
+
+         <!-- Used to display Alerts -->
+         <div id="alerts"></div>
+
+        <!-- Body Section Start. Below section will only work when viewd on webpage -->
+        <div class="table-responsive table-hover d-none d-sm-block d-md-block">
+            <div class="listTran-container">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="th-income" scope="col"><div id="income"></div></th>
+                            <th class="th-expense" scope="col"><div id="expense"></div></th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody-listTran" id="tranListTab">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Body Section Start. Below section will only work when viewd on mobile -->
+        <div class="d-block d-sm-none d-md-none">
+            <div class="container">
+                <div class="row  mob-tranList-top">
+                    <div class="col-5"></div>
+                    <div class="col-4"><span style="font-size: 17px">May</span></div>
+                    <div class="col text-right" id="addMobTransaction"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                </div>
+                <div class="row">
+                    <div class="col-5"></div>
+                    <div class="col-4"><i class="fas fa-arrow-circle-left"></i> <i class="fas fa-arrow-circle-right"></i></div>
+                    <div class="col text-right"></i></div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <div class="listTran-container">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th class="th-income" scope="col">23,000.00</th>
+                                <th class="th-expense" scope="col">1,000.00</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody-listTran">
+                            <tr onclick="editExpense('1')">
+                                <td scope="row">
+                                    <div>
+                                        <div><i class="fa fa-shopping-cart" aria-hidden="true"></i> Milk</div>
+                                        <div class="expense-date-info">Saturday, 30  May 2020</div>
+                                    </div>
+                                </td>
+                                <td scope="row" class="td-expense">56.0</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div>
+                                        <div><i class="fa fa-shopping-cart" aria-hidden="true"></i> Dettol</div>
+                                        <div class="expense-date-info">Monday, 24 May 2020</div>
+                                    </div>
+                                </td>
+                                <td scope="row" class="td-expense">284.0</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div>
+                                        <div><i class="fa fa-motorcycle" aria-hidden="true"></i> Bike Servicing</div>
+                                        <div class="expense-date-info">Sunday, 23 May 2020</div>
+                                    </div>
+                                </td>
+                                <td scope="row" class="td-expense">750.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model is used to edit or delete the expense -->
+        <div class="modal fade" id="editDeleteModel" tabindex="-1" role="dialog" aria-labelledby="editDeleteModelLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="editDeleteModelLabel">Edit/Delete Transaction</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-register" id="tranForm">
+                            <div class="input-group mb-2">
+                                <input type="text" id="tranDate" class="form-control" placeholder="Enter Date" required autofocus>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <!-- <i class="fa fa-arrow-circle-o-right d-block d-sm-none d-md-none" aria-hidden="true" id="tranDateMobileId"></i> -->
+                                        <i class="fa fa-calendar" aria-hidden="true" id="tranDateWebId"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <input type="text" id="tranAmount" class="form-control mb-2" placeholder="Enter Amount" required>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                  <label class="input-group-text" for="tranCategory">Category</label>
+                                </div>
+                                <select class="selectpicker" data-live-search="true" data-width="auto" id="tranCategory">
+                                    <option selected>Choose...</option>
+                                    <option data-content="<i class='fas fa-gas-pump'></i> Fuel"></option>
+                                    <option data-content="<i class='fas fa-tshirt'></i> Shopping"></option>
+                                    <option data-content="<i class='fas fa-utensils'></i> Eating Out"></option>
+                                    <option data-content="<i class='fas fa-video'></i> Entertainment"></option>
+                                  </select>
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Note</span>
+                                </div>
+                                <textarea class="form-control" aria-label="Enter Note"></textarea>
+                            </div>
+                            <button class="btn btn-sm btn-primary btn-block d-none d-sm-block d-md-block" type="button">Done</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary">Edit</button>
+                        <button type="button" class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Display bottom menu only during SM screen -->
+        <nav class="navbar d-flex justify-content-end fixed-bottom navbar-expand navbar-light bg-light d-block d-sm-none d-md-none">
+            <a class="navbar-brand" href="dashboard.html"><i class="fa fa-home" aria-hidden="true"></i></a>
+            <a class="navbar-brand" href="transaction.html"><i class="fas fa-comment-dollar"></i></a>
+            <a class="navbar-brand" href="listTransaction.html"><i class="fas fa-list-ul"></i></i></a>
+            <a class="navbar-brand" href="category.html"><i class="fa fa-cog" aria-hidden="true"></i></a>
+        </nav>
+        
+        <!-- Load the Bootstrap scripts JQUery First, then Popper and then Bootstrap -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.datetimepicker.full.min.js"></script>
+        <script src="js/bootstrap-select.min.js"></script>
+        <script src="js/exptracker.js"></script>
+    </body>
+</html>
