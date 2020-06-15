@@ -27,8 +27,12 @@
         <h3 class="h5 mb-3">Login</h1>
             <input type="email" id="inputEmail" class="form-control mb-2" placeholder="Email address">
             <input type="password" id="inputPassword" class="form-control mb-2" placeholder="Password">
-            <button class="btn btn-sm bg-primary btn-block" id="signIn" type="button" onclick="validateLogin();">Sign
-                in</button>
+            <div class="d-none d-sm-block d-md-block">
+                <button class="btn btn-sm bg-primary btn-block" id="signIn" type="button" onclick="validateLogin('LS');">Sign in</button>
+            </div>
+            <div class="d-block d-sm-none d-md-none">
+                <button class="btn btn-sm bg-primary" id="signIn" type="button" onclick="validateLogin('SM');">Sign in</button>
+            </div>    
             <a href="registerAccount.html" class="signup-msg">Register to create an account.</a>
     </form>
 
@@ -54,7 +58,21 @@
         </div>
     </div>
 
-
+    <!-- Model used to display various alert message -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModelLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="alertModelLabel">Alerts</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="alertModalBody" class="modal-body"></div>
+        </div>
+    </div>
+    </div>
 
     <!-- Load the Bootstrap scripts JQUery First, then Popper and then Bootstrap -->
     <script src="js/jquery-3.3.1.min.js"></script>

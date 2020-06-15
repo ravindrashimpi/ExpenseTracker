@@ -30,7 +30,12 @@
             <input type="password" id="myPassword" name="myPassword" class="form-control mb-2" placeholder="Password">
             <input type="password" id="myConfirmPassword" name="myConfirmPassword" class="form-control mb-2"
                 placeholder="Confirm Password">
-            <button class="btn btn-sm btn-primary btn-block" type="button" onclick="registerUser()">Register</button>
+            <div class="d-none d-sm-block d-md-block">
+                <button class="btn btn-sm btn-primary btn-block" type="button" onclick="registerUser('LS')">Register</button>
+            </div>
+            <div class="d-block d-sm-none d-md-none">
+                <button class="btn btn-sm btn-primary" type="button" onclick="registerUser('SM')">Register</button>
+            </div>
     </form>
 
     <div class="container">
@@ -59,14 +64,14 @@
             generated and send to their email for verification -->
     <div class="modal fade" id="regConfirmModel" tabindex="-1" role="dialog" aria-labelledby="regConfirmLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="regConfirmLabel">Registration</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
+                </div> 
                 <div id="modelMsg" class="modal-body">
                     <!-- <p>Security Code has been send to your email-id.</p> -->
                 </div>
@@ -74,6 +79,22 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         onclick="redirectToLoginWithRegCode()">Ok</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model used to display various alert message -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModelLabel"
+    aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="alertModelLabel">Alerts</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="alertModalBody" class="modal-body"></div>
             </div>
         </div>
     </div>

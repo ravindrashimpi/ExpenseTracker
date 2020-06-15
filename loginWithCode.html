@@ -27,15 +27,19 @@
             <input type="email" id="inputEmail" class="form-control mb-2" placeholder="Email address">
             <input type="password" id="inputPassword" class="form-control mb-2" placeholder="Password">
             <input type="text" id="inputRegCode" class="form-control mb-2" placeholder="Registration Code">
-            <button class="btn btn-sm bg-primary btn-block" type="button" onclick="validateRegistrationCode()">Verify
-                Code</button>
+            <div class="d-none d-sm-block d-md-block">
+                <button class="btn btn-sm bg-primary btn-block" type="button" onclick="validateRegistrationCode('LS')">Verify Code</button>
+            </div>
+            <div class="d-block d-sm-none d-md-none">
+                <button class="btn btn-sm bg-primary" type="button" onclick="validateRegistrationCode('SM')">Verify Code</button>
+            </div>      
     </form>
 
     <!-- Model is define which will inform user that the code has been 
             generated and send to their email for verification -->
     <div class="modal fade" id="regVerificationModal" tabindex="-1" role="dialog"
         aria-labelledby="regVerificationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="regVerificationModalLabel">Registration</h5>
@@ -51,6 +55,22 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Model used to display various alert message -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModelLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="alertModelLabel">Alerts</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="alertModalBody" class="modal-body"></div>
+        </div>
+    </div>
     </div>
 
     <!-- Load the Bootstrap scripts JQUery First, then Popper and then Bootstrap -->

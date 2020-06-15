@@ -17,8 +17,8 @@ function logout() {
 }
 
 //Function used to validate the user with the Security Code
-function validateRegistrationCode() {
-    if (validateVerificationCodeForm()) {
+function validateRegistrationCode(view) {
+    if (validateVerificationCodeForm(view)) {
         $('#alerts').hide('slow');
         var poolData = {
             UserPoolId: 'ap-south-1_PRWAbvjzt',
@@ -35,9 +35,15 @@ function validateRegistrationCode() {
         cognitoUser.confirmRegistration($('#inputRegCode').val(), true, function (err, result) {
             if (err) {
                 console.log("Error:" + err.message || JSON.stringify(err));
-                $('#alerts').show('slow');
-                $('#alerts').html("<div class='alert alert-danger' role='alert'>" + err.message + "</div>");
-                return false;
+                if(view == 'LS') {
+                    $('#alerts').show('slow');
+                    $('#alerts').html("<div class='alert alert-danger' role='alert'>" + err.message + "</div>");
+                    return false;
+                } else {
+                    $('#alertModalBody').html("<div class='alert alert-danger' role='alert'>" + err.message + "</div>");
+                    $('#alertModal').modal('show');  
+                    return false;
+                }
             }
             console.log('call result: ' + result);
             $('#regVerificationModal').on("show.bs.modal", function (e) {
@@ -57,8 +63,8 @@ function redirectToLoginWithRegCode() {
 }
 
 //Function used to register the user to Cognito
-function registerUser() {
-    if (validateNewUserRegistrationForm()) {
+function registerUser(view) {
+    if (validateNewUserRegistrationForm(view)) {
         $('#alerts').hide('slow');
         const poolData = {
             UserPoolId: 'ap-south-1_PRWAbvjzt',
@@ -88,8 +94,8 @@ function registerUser() {
 }
 
 //Function get executed when user click on SignIn button on the login form
-function validateLogin() {
-    if (validateLoginForm()) {
+function validateLogin(view) {
+    if (validateLoginForm(view)) {
         $('#alerts').hide('slow');
         const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
             Username: $('#inputEmail').val(),
@@ -119,10 +125,16 @@ function validateLogin() {
                 $(location).attr('href', 'dashboard.html');
             },
             onFailure: (err) => {
-                console.log("Error:" + err.message);
-                $('#alerts').show('slow');
-                $('#alerts').html("<div class='alert alert-danger' role='alert'>" + err.message + "</div>");
-                return false;
+                if(view == 'LS') {
+                    console.log("Error:" + err.message);
+                    $('#alerts').show('slow');
+                    $('#alerts').html("<div class='alert alert-danger' role='alert'>" + err.message + "</div>");
+                    return false;
+                } else {
+                    $('#alertModalBody').html("<div class='alert alert-danger' role='alert'>" + err.message + "</div>");
+                    $('#alertModal').modal('show'); 
+                    return false;
+                }
             }
         });
 
@@ -720,83 +732,177 @@ function processDashboard() {
 }
 
 //Function used to validate the login form
-function validateLoginForm() {
+function validateLoginForm(view) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if ($('#inputEmail').val() == "") {
         console.log("Email is required");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Email is required.</div>')
-        return false;
+        if(view == 'LS') {
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Email is required.</div>')
+            return false;
+        } else {
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Email is required.</div>')
+            $('#alertModal').modal('show'); 
+            return false;
+        }
     } else if (!re.test(String($('#inputEmail').val()).toLocaleLowerCase())) {
         console.log("Invalid Email");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Invalid email address.</div>')
-        return false;
+        if(view == 'LS') {
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Invalid email address.</div>')
+            return false;
+        } else {
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Invalid email address.</div>')
+            $('#alertModal').modal('show'); 
+            return false;
+        }
     } else if ($('#inputPassword').val() == "") {
         console.log("Password is required");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Password is required.</div>')
-        return false;
+        if(view == 'LS') {
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Password is required.</div>')
+            return false;
+        } else {
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Password is required.</div>')
+            $('#alertModal').modal('show'); 
+            return false;
+        }
     }
     return true;
 }
 
 //Function used to validate the new user registration form
-function validateNewUserRegistrationForm() {
+function validateNewUserRegistrationForm(view) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     if ($('#firstName').val() == "") {
-        console.log("First Name is required");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">First Name is required.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("First Name is required");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">First Name is required.</div>')
+            return false;
+        } else {
+            console.log("First Name is required");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">First Name is required.</div>');
+            $('#alertModal').modal('show');   
+            return false;
+        }
     } else if ($('#lastName').val() == "") {
-        console.log("Last Name is required");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Last Name is required.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("Last Name is required");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Last Name is required.</div>')
+            return false;
+        } else {
+            console.log("Last Name is required");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Last Name is required.</div>');
+            $('#alertModal').modal('show');   
+            return false;
+        }
     } else if ($('#emailId').val() == "") {
-        console.log("Email id is required");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Email Id is required.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("Email id is required");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Email Id is required.</div>')
+            return false;
+        } else {
+            console.log("Email id is required");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Email Id is required.</div>');
+            $('#alertModal').modal('show');   
+            return false;
+        }
     } else if (!re.test(String($('#emailId').val()).toLocaleLowerCase())) {
-        console.log("Invalid Email");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Invalid email address.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("Invalid Email");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Invalid email address.</div>')
+            return false;
+        } else {
+            console.log("Invalid Email");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Invalid email address.</div>');
+            $('#alertModal').modal('show');   
+            return false;
+        }
     } else if ($('#myPassword').val() == "") {
-        console.log("Password is required");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Password is required.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("Password is required");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Password is required.</div>')
+            return false;
+        } else {
+            console.log("Password is required");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Password is required.</div>');
+            $('#alertModal').modal('show');   
+            return false;
+        }
     } else if ($('#myConfirmPassword').val() == "") {
-        console.log("Confirm password is required");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Confirm password is required.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("Confirm password is required");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Confirm password is required.</div>')
+            return false;
+        } else {
+            console.log("Confirm password is required");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Confirm password is required.</div>');
+            $('#alertModal').modal('show');   
+            return false;
+        }
     } else if ($('#myConfirmPassword').val() != $('#myPassword').val()) {
-        console.log("Password and Confirm Password should match");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Password and Confirm Password should match.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("Password and Confirm Password should match");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Password and Confirm Password should match.</div>')
+            return false;
+        } else {
+            console.log("Password and Confirm Password should match");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Password and Confirm Password should match.</div>');
+            $('#alertModal').modal('show');   
+            return false;
+        }
+        
     }
     return true;
 }
 
 //Function used to validate the userRegistration form with Code
-function validateVerificationCodeForm() {
+function validateVerificationCodeForm(view) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if ($('#inputEmail').val() == "") {
-        console.log("Email id is required");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Email Id is required.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("Email id is required");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Email Id is required.</div>')
+            return false;
+        } else {
+            console.log("Email id is required");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Email Id is required.</div>');
+            $('#alertModal').modal('show');  
+            return false;  
+        }
     } else if (!re.test(String($('#inputEmail').val()).toLocaleLowerCase())) {
-        console.log("Invalid Email");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Invalid email address.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("Invalid Email");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Invalid email address.</div>')
+            return false;
+        } else {
+            console.log("Invalid Email");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Invalid email address.</div>');
+            $('#alertModal').modal('show');  
+            return false;  
+        }
     } else if ($('#inputPassword').val() == "") {
-        console.log("Password is required");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Password is required.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("Password is required");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Password is required.</div>')
+            return false;
+        } else {
+            console.log("Password is required");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Password is required.</div>');
+            $('#alertModal').modal('show');  
+            return false;  
+        }
     } else if ($('#inputRegCode').val() == "") {
-        console.log("Registration Code is required");
-        $('#alerts').html('<div class="alert alert-danger" role="alert">Registration Code is required.</div>')
-        return false;
+        if(view == 'LS') {
+            console.log("Registration Code is required");
+            $('#alerts').html('<div class="alert alert-danger" role="alert">Registration Code is required.</div>')
+            return false;
+        } else {
+            console.log("Registration Code is required");
+            $('#alertModalBody').html('<div class="alert alert-danger" role="alert">Registration Code is required.</div>');
+            $('#alertModal').modal('show');  
+            return false;  
+        }
     }
-
     return true;
 }
 
